@@ -1,0 +1,12 @@
+venv/
+migrations/
+logs/
+app.log
+
+__pycache__/
+*.py[cod]
+
+.pytest_cache/
+
+.env
+.venv
