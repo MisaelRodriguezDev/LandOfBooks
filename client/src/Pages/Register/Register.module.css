@@ -1,0 +1,20 @@
+.form_container {
+    width: 46vw;
+}
+
+.form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.recaptcha {
+    grid-column: span 2;
+    justify-self: center;
+}
+
+.button_container {
+    justify-self: center;
+    grid-column: span 2;
+    width: 95%;
+}

@@ -1,0 +1,21 @@
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.divider::before, .divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+}
+
+.divider::before {
+    margin-right: 1rem;
+}
+
+.divider::after {
+    margin-left: 1rem;
+}

@@ -5,10 +5,11 @@ class Config:
 
     PORT: int = config("PORT", cast=int)
     SECRET_KEY: str = config("SECRET_KEY")
-    DB_URL: str = config("DB_URL")
+    DB_URL: str = config("DB_URL_DEV")
     CLIENT_URL: str = config("CLIENT_URL")
+    CIPHER_KEY: str = config("CIPHER_KEY")
 
-    RECAPTCHA: str = config("RECAPTCHA")
+    RECAPTCHA_SECRET_KEY: str = config("RECAPTCHA_SECRET_KEY")
 
     SMTP_SERVER: str = config("SMTP_SERVER")
     SMTP_PORT: int = config("SMTP_PORT")

@@ -1,0 +1,11 @@
+.error_message {
+    display: block;
+    width: 100%;
+    color: var(--accent);
+    padding: 2px;
+    font-size: medium;
+}
+
+.error_message::before {
+    content: "✗ ";
+}

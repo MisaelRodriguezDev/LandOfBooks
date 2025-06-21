@@ -1,0 +1,47 @@
+.form_group {
+    margin-top: 15px;
+  }
+label {
+    display: flex;
+    justify-content: start;
+    font-weight: bolder;
+}
+
+.form_control {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--gray-light);
+    background-color: #fff;
+    color: #000;
+}
+
+.error_container {
+    padding: 4px;
+    min-height: 1.2rem; /* Espacio reservado para el mensaje */
+    font-size: 0.875rem; /* Tamaño de fuente adecuado */
+    visibility: hidden; /* Oculta sin perder el espacio */
+}
+
+.active {
+    visibility: visible;
+}
+
+.input_wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.eye_button {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
