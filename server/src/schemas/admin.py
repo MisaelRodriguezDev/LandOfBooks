@@ -1,5 +1,5 @@
-from pydantic import Field, PrivateAttr
-from .users import Roles, UserBase, UserUpdate, UserIn
+from pydantic import Field, BaseModel
+from .users import Roles, UserBase, UserUpdate, UserIn    
 
 class UserUpdateFromAdmin(UserUpdate):
     role: Roles | None = Field(default=None, min_length=4, max_length=9)

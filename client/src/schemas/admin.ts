@@ -1,6 +1,6 @@
 import {z} from "zod";
 import {passwordSchema} from "./auth"
-import { Roles } from "../types/user";
+import { Roles } from "@/types/user";
 
 const roleSchema = z.enum([
   Roles.ADMIN,

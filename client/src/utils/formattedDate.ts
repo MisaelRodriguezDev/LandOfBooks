@@ -1,7 +1,25 @@
-function formattedDate(date_string: string) {
-    const date = new Date(date_string);
-    const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}, ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} ${date.getHours() >= 12 ? "p.m." : "a.m."}`;
-    return formattedDate
+function formattedDate(dateString: string) {
+  if (!dateString) {
+    return "Sin fecha"
+  }
+  if (dateString.length === 4) {
+    return dateString
+  }
+  const date = new Date(dateString);
+
+  const showTime = dateString.includes("T");
+
+  return new Intl.DateTimeFormat('es-MX', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    ...(showTime && {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+    }),
+  }).format(date);
 }
 
 export default formattedDate;

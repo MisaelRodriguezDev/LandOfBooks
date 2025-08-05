@@ -1,11 +1,10 @@
-from typing import Literal
-from uuid import UUID
-from fastapi import Depends, APIRouter, Path
+from fastapi import Depends, APIRouter
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy import func
 from sqlmodel import Session, select
 import jwt
 from jwt.exceptions import InvalidTokenError, ExpiredSignatureError
+from src.schemas.security import SecurityContext
 from src.schemas.users import Roles
 from src.models.users import User
 from src.core.config import CONFIG
@@ -54,7 +53,7 @@ def authenticate_user(session: Session, username: str, password: str):
         return False
     return account
 
-async def get_current_account(session: Session = Depends(get_session), token: str = Depends(oauth2_scheme)):
+def get_current_account(session: Session = Depends(get_session), token: str = Depends(oauth2_scheme)):
     """Obtén la cuenta del usuario que realiza la petición
     
     Args:
@@ -83,7 +82,7 @@ async def get_current_account(session: Session = Depends(get_session), token: st
     except Exception as e:
         raise ServerError() from e
 
-async def get_current_active_account(current_user: User = Depends(get_current_account)):
+def get_current_active_account(current_user: User = Depends(get_current_account)):
     """Verifica que la cuenta este activa, es decir, que el usuario la haya confirmado
     
     Args:
@@ -95,20 +94,29 @@ async def get_current_active_account(current_user: User = Depends(get_current_ac
     Returns:
         User: Retorna la cuenta del usuario
     """    
-    if not current_user.is_confirmed or current_user.disabled:
+    if not current_user.is_confirmed or not current_user.enabled:
         raise UnauthorizedError()
     return current_user
 
-async def is_admin(current_user: User = Depends(get_current_active_account)):
+def is_admin(current_user: User = Depends(get_current_active_account)):
     if current_user.role != Roles.ADMIN:
         raise ForbiddenError()
     return current_user
 
-async def is_librarian_or_admin(current_user: User = Depends(get_current_active_account)):
+def is_librarian_or_admin(current_user: User = Depends(get_current_active_account)):
     valid_roles = [Roles.ADMIN, Roles.LIBRARIAN]
     if current_user.role not in valid_roles:
         raise ForbiddenError()
     return current_user
+
+def get_security_context(
+    current_user: User = Depends(get_current_active_account)
+) -> SecurityContext:
+    return SecurityContext(
+        user=current_user,
+        is_admin=current_user.role == Roles.ADMIN,
+        is_librarian=current_user.role == Roles.LIBRARIAN
+    )
 
 def get_user_service(session: Session = Depends(get_session)) -> UserService:
     return UserService(session)
@@ -118,3 +126,8 @@ def get_librarian_service(session: Session = Depends(get_session), _:User = Depe
 
 def get_admin_service(session: Session = Depends(get_session), _ = Depends(is_admin)):
     return AdminService(session)
+
+def get_service(service):
+    def dependency(session: Session = Depends(get_session)):
+        return service(session)
+    return dependency

@@ -21,13 +21,6 @@ function Footer() {
                     <li>Tel: 555-1234</li>
                     <li>Email: contacto@biblioteca.org</li>
                 </ul>
-
-                <div className={styles.social_links}>
-                    <a href="#">📘</a>
-                    <a href="#">📱</a>
-                    <a href="#">✉️</a>
-                    <a href="#">🔔</a>
-                </div>
             </div>
         </div>
 

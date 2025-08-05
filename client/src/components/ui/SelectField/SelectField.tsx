@@ -1,5 +1,5 @@
 import ErrorMessage from "../Messages/Error/Error";
-import type { SelectProps } from "../../../types/form";
+import type { SelectProps } from "@/types/form";
 import styles from "./SelectField.module.css"; // Crea un archivo CSS module para el select
 
 function SelectField<T extends Record<string, unknown>>({

@@ -1,9 +1,8 @@
+from uuid import UUID
 from sqlmodel import Session, select
 from sqlalchemy import func
-from src.models.users import User
+from src.models import User
 from src.core.config import CONFIG
-from uuid import UUID
-from typing import Sequence
 
 class UserRepository:
     def __init__(self, session: Session):
@@ -24,17 +23,19 @@ class UserRepository:
         return self.session.exec(stmt).first()
 
     def create(self, user: User) -> User:
+        User()
+        self.session.add(user)
+        self.session.commit()
+        return user
+
+    def update(self, user: User) -> User:
         self.session.add(user)
         self.session.commit()
         self.session.refresh(user)
         return user
 
-    def update(self, user: User) -> User:
-        self.session.commit()
-        self.session.refresh(user)
-        return user
-
     def delete(self, user: User) -> None:
-        user.disabled = True
+        user.enabled = False
+        self.session.add(user)
         self.session.commit()
         self.session.refresh(user)

@@ -13,6 +13,7 @@ class LibrarianRepository(UserRepository):
             User,
             func.pgp_sym_decrypt(User.email, CONFIG.CIPHER_KEY).label("decrypted_email")
         )
+
         results = self.session.exec(stmt).all()
 
         response = [

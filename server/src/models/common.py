@@ -6,8 +6,13 @@ from datetime import datetime, timezone
 class Base(SQLModel):
     """Common fields in the tables of the database."""
     id: UUID = Field(default_factory=uuid4, primary_key=True)
+    enabled: bool = Field(default=True)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+    class Config:
+        arbitrary_types_allowed = True
+        from_attributes = True
 
 
 @event.listens_for(Base, "before_update", propagate=True)

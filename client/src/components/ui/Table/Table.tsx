@@ -1,7 +1,12 @@
 import { useState } from "react";
-import type { TableProps } from "../../../types/table";
-import formattedDate from "../../../utils/formattedDate";
+import type { TableProps } from "@/types/table";
+import formattedDate from "@/utils/formattedDate";
 import styles from "./Table.module.css";
+
+// Campos a ocultar si hideTimestamps está activado
+const timeStampFields = ['created_at', 'updated_at'];
+const dateFields = ['date'];
+const booleanFields = ['enabled'];
 
 // Iconos SVG para acciones
 const EditIcon = () => (
@@ -17,61 +22,82 @@ const DeleteIcon = () => (
   </svg>
 );
 
-export default function Table<T extends { id: string }>({ 
+export default function Table<T extends { id: string } & Record<string, unknown>>({ 
   columns, 
   data, 
   manager,
+  hideTimestamps = true,
   updatefn,
   deletefn
 }: Readonly<TableProps<T>>) {
   const [hoveredRow, setHoveredRow] = useState<string | null>(null);
-  const dateFields = ['created_at', 'updated_at'];
-  
+
+  // Filtrar columnas según configuración
+  const filteredColumns = hideTimestamps
+    ? columns.filter(col => !timeStampFields.includes(String(col.key)))
+    : columns;
+
   return (
     <div className={styles.tableContainer}>
       <table className={styles.table}>
         <thead>
           <tr>
-            {columns.map((col) => (
+            {filteredColumns.map((col) => (
               <th key={String(col.key)} className={styles.th}>
                 {col.header}
               </th>
             ))}
-            {data && manager && <th className={styles.th}>Acciones</th>}
+            {data.length > 0 && manager && <th className={styles.th}>Acciones</th>}
           </tr>
         </thead>
         <tbody>
-          {data.map(row => (
-            <tr 
-              key={row.id}
-              className={`${styles.tr} ${hoveredRow === row.id ? styles.hovered : ''}`}
-              onMouseEnter={() => setHoveredRow(row.id)}
-              onMouseLeave={() => setHoveredRow(null)}
-            >
-              {columns.map((col) => (
-                <td 
-                  key={String(col.key)} 
-                  className={`${styles.td} ${String(col.key) === 'id' ? styles.idCell : ''}`}
-                >
-                  {dateFields.includes(String(col.key)) 
-                    ? formattedDate(String(row[col.key])) 
-                    : String(row[col.key])}
-                </td>
-              ))}
-              {data && manager && (
-                <td className={styles.td}>
-                  <div className={styles.actions}>
-                    <button className={`${styles.btnAction} ${styles.btnEdit}`} onClick={() => updatefn?.(row)}>
-                      <EditIcon />
-                    </button>
-                    <button className={`${styles.btnAction} ${styles.btnDelete}`} onClick={() => deletefn?.(row)}>
-                      <DeleteIcon />
-                    </button>
-                  </div>
-                </td>
-              )}
-            </tr>
-          ))}
+          {data.map(row => {
+            const isDisabled = booleanFields.some(field => row[field] === false);
+
+            return (
+              <tr 
+                key={row.id}
+                className={`${styles.tr} ${hoveredRow === row.id ? styles.hovered : ''}`}
+                onMouseEnter={() => setHoveredRow(row.id)}
+                onMouseLeave={() => setHoveredRow(null)}
+              >
+                {filteredColumns.map((col) => (
+                  <td 
+                    key={String(col.key)} 
+                    className={`${styles.td} ${String(col.key) === 'id' ? styles.idCell : ''}`}
+                  >
+                    {
+                      dateFields.includes(String(col.key))
+                        ? formattedDate(String(row[col.key]))
+                        : typeof row[col.key] === "boolean"
+                          ? row[col.key] ? "Activo" : "Eliminado"
+                          : String(row[col.key])
+                    }
+                  </td>
+                ))}
+                {manager && (
+                  <td className={styles.td}>
+                    <div className={styles.actions}>
+                      <button
+                        className={`${styles.btnAction} ${styles.btnEdit}`}
+                        onClick={() => updatefn?.(row)}
+                        disabled={isDisabled}
+                      >
+                        <EditIcon />
+                      </button>
+                      <button
+                        className={`${styles.btnAction} ${styles.btnDelete}`}
+                        onClick={() => deletefn?.(row)}
+                        disabled={isDisabled}
+                      >
+                        <DeleteIcon />
+                      </button>
+                    </div>
+                  </td>
+                )}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

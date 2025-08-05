@@ -8,10 +8,11 @@ export interface UserProfile {
     email: string;
     image_url: string;
     mfa_active: boolean;
-    disabled: boolean;
+    enabled: boolean;
     role: Role;
     created_at: Date;
     updated_at: Date;
+    [key: string]: string | number | boolean | Date | undefined;
 }
 
 export interface GetUser {

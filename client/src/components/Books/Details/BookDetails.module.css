@@ -1,0 +1,115 @@
+.detailContainer {
+  background: var(--light-bg);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.cover {
+  width: 200px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.info {
+  flex: 1;
+}
+
+.title {
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.year {
+  color: var(--gray-dark);
+  font-weight: 500;
+}
+
+.genres {
+  margin: 1rem 0;
+}
+
+.genre {
+  background-color: var(--gray-light);
+  color: var(--black);
+  padding: 0.3rem 0.8rem;
+  margin-right: 0.5rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+
+.publisher {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.publisherLogo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.authors {
+  margin-top: 2rem;
+}
+
+.authorItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.authorPhoto {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.description {
+  margin-top: 2rem;
+}
+
+.actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.loanBtn,
+.reserveBtn {
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.loanBtn {
+  background-color: var(--success);
+  color: white;
+}
+
+.reserveBtn {
+  background-color: var(--accent);
+  color: white;
+}
+
+.reserveBtn:disabled {
+  background-color: var(--gray-light);
+  cursor: not-allowed;
+  color: var(--gray-dark);
+}

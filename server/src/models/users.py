@@ -1,4 +1,5 @@
-from sqlmodel import Field
+from typing import TYPE_CHECKING, Optional
+from sqlmodel import Field, Enum, Column, Relationship
 import pyotp
 from sqlalchemy import event, func, inspect
 from sqlalchemy.dialects.postgresql import BYTEA
@@ -6,7 +7,12 @@ from .common import Base
 from src.core.security import hash_password, encrypt_data
 from src.core.config import CONFIG
 from src.schemas.users import Roles
+from .address import Address
 
+if TYPE_CHECKING:
+    from .loans import Loan
+    from .reservations import Reservation
+    from .penalties import Penalty
 
 IMAGE = "https://i.pinimg.com/550x/a8/0e/36/a80e3690318c08114011145fdcfa3ddb.jpg"
 
@@ -23,15 +29,24 @@ class User(Base, table=True):
     first_name: str = Field(nullable=False, min_length=5, max_length=100)
     last_name: str = Field(nullable=False, min_length=5, max_length=100)
     username: str = Field(min_length=5, max_length=20, index=True, unique=True)
-    email: bytes = Field(nullable=False,index=True, unique=True, sa_type=BYTEA)
+    email: bytes = Field(nullable=False, index=True, unique=True, sa_type=BYTEA)
+    phone: str = Field(nullable=False, min_length=13,  max_length=13)
     password: str = Field(nullable=False, min_length=8, max_length=255)
-    role: Roles = Field(nullable=False, min_length=4, max_length=9, default=Roles.USER)
+    role: Roles = Field(
+        min_length=4, 
+        max_length=9, 
+        default=Roles.USER, 
+        sa_column=Column(Enum(Roles))
+    )
     is_confirmed: bool = Field(default=False)
     mfa_active: bool = Field(default=False)
     totp_secret: str = Field(nullable=True)
     image_url: str = Field(default=IMAGE, nullable=False, max_length=255)
-    disabled: bool = Field(default=False)
 
+    address: Address = Relationship(back_populates='user')
+    loans: list["Loan"] | None = Relationship(back_populates='user')
+    reservations: list["Reservation"] | None = Relationship(back_populates='user')
+    penalties: list["Penalty"] | None = Relationship(back_populates='user')
 
 @event.listens_for(User, "before_insert")
 def hash_password_on_insert(mapper, connection, target: User):

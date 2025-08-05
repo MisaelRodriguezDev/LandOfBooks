@@ -4,6 +4,9 @@ class Config:
     __instance = None
 
     PORT: int = config("PORT", cast=int)
+    ENVIRONMENT: str = config("ENVIRONMENT", default='production')
+    _CERT_FILE: str = config("CERT")
+    _CERT_KEY: str = config("CERT_KEY")
     SECRET_KEY: str = config("SECRET_KEY")
     DB_URL: str = config("DB_URL_DEV")
     CLIENT_URL: str = config("CLIENT_URL")

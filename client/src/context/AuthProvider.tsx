@@ -1,8 +1,9 @@
 import { createContext, useContext, useState, useEffect, type ReactNode, useMemo, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { loginRequest, registerRequest, generateTotpQRResuqest, verifyTOTP } from '../services/auth';
-import type { UserProfile } from '../types/user';
 import { userProfileRequest } from '../services/user';
+import useInactivityLogout from '@/hooks/useInactivityLogout';
+import type { UserProfile } from '../types/user';
 import type { RegisterFormData, LoginFormData } from '../schemas/auth';
 
 interface AuthContextType {
@@ -30,6 +31,19 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
   const [success, setSuccess] = useState<string | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
+
+    const clearData = useCallback(() => {
+    localStorage.clear()
+    setUser(null)
+  }, [])
+
+  const logout = useCallback(() => {
+    clearData()
+    setSuccess('Sesión cerrada correctamente');
+    navigate('/');
+  }, [navigate]);
+
+  useInactivityLogout(logout, !!user)
 
   const checkAuth = useCallback(async () => {
     const token = localStorage.getItem('token');
@@ -158,16 +172,7 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
     }
   }, [navigate]);
 
-  const clearData = useCallback(() => {
-    localStorage.clear()
-    setUser(null)
-  }, [])
 
-  const logout = useCallback(() => {
-    clearData()
-    setSuccess('Sesión cerrada correctamente');
-    navigate('/');
-  }, [navigate]);
 
   const value = useMemo(() => ({
     user,

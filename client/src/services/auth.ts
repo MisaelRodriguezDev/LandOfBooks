@@ -1,6 +1,6 @@
 import api from "./axios";
-import type { RegisterFormData } from "../schemas/auth";
-//import type { ChangePasswordFormData, ForgotPasswordFormData, ResetPasswordFormData } from "../schemas/auth";
+import type { RegisterFormData } from "@/schemas/auth";
+//import type { ChangePasswordFormData, ForgotPasswordFormData, ResetPasswordFormData } from "@/schemas/auth";
 import type { 
   LoginResponse, 
   SignUpResponse ,
@@ -10,7 +10,7 @@ import type {
   //ChangePasswordResponse,
   //ForgotPasswordResponse,
   //ResetPasswordResponse
-} from "../types/auth";
+} from "@/types/auth";
 
 export const registerRequest = async (data: RegisterFormData): Promise<SignUpResponse> => await api.post("/register", data)
 export const loginRequest = async (data: FormData): Promise<LoginResponse> => await api.post("/login", data, {

@@ -1,4 +1,4 @@
-import type { ModuleCss } from "../../../types/component"
+import type { ModuleCss } from "@/types/component"
 import styles from "./Button.module.css"
 
 interface ButtonProps extends ModuleCss {

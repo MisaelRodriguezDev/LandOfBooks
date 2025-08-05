@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ErrorMessage from "../Messages/Error/Error";
-import type { FormFieldProps } from "../../../types/form";
+import type { FormFieldProps } from "@/types/form";
 import styles from "./input.module.css";
 
 function FormField<T extends Record<string, unknown>>({

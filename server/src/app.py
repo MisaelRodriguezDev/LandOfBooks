@@ -5,7 +5,7 @@ from src.core.database import create_db_and_tables
 from src.core.config import CONFIG
 from src.exceptions.exceptions import ApiError
 from src.libs.logger import logger
-from src.api.v1.routes import users, auth, librarian, admin
+from src.api.v1.routes import users, auth, librarian, admin, api, books
 
 def create_app(info: dict[str, str]) -> FastAPI:
     logger.info("Iniciando aplicación.")
@@ -53,6 +53,8 @@ def create_app(info: dict[str, str]) -> FastAPI:
     api_router.include_router(auth.router)
     api_router.include_router(librarian.router)
     api_router.include_router(admin.router)
+    api_router.include_router(api.router)
+    api_router.include_router(books.router)
 
 
     app.include_router(api_router)

@@ -2,6 +2,7 @@ from alembic import context
 from sqlalchemy import engine_from_config, pool
 from sqlmodel import SQLModel
 from src.core.database import get_engine  # Asegúrate de importar tu motor de BD
+from src.models import genres, authors, publishers, books, book_genre, book_author, copies, loans, reservations, penalties, users   # ← incluye aquí 'copies'
 
 # Cargar configuración desde alembic.ini
 config = context.config

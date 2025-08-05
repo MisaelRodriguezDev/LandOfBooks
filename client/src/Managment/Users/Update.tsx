@@ -10,6 +10,7 @@ import { useState } from "react";
 import { updateUserRequest } from "../../services/admin";
 import SelectField from "../../components/ui/SelectField/SelectField";
 import { useButtonEnablement } from "../../hooks/useButtonEnablement";
+import useFormChanges from "@/hooks/useFormChanges";
 import type { UUID } from "crypto"; // o usa `string` si UUID es alias
 
 type UpdateUserProps = {
@@ -31,7 +32,8 @@ export default function UpdateUser({ id, onSuccess, initialData }: Readonly<Upda
     register,
     handleSubmit,
     control,
-    formState: { errors }
+    formState: { errors, dirtyFields },
+    watch
   } = useForm<UpdateUserFromAdminFormData>({
     resolver: zodResolver(updateUserFromAdminSchema),
     mode: "onBlur",
@@ -47,9 +49,13 @@ export default function UpdateUser({ id, onSuccess, initialData }: Readonly<Upda
   const requiredFields = ["username", "email"]; // ajusta según tus reglas de habilitación
   const enabled = useButtonEnablement(values, errors, requiredFields);
 
-  const onSubmit: SubmitHandler<UpdateUserFromAdminFormData> = async (data) => {
+  const {getChangedFields, changedCount} = useFormChanges({watch, dirtyFields})
+
+  const onSubmit: SubmitHandler<UpdateUserFromAdminFormData> = async () => {
     try {
+      if (changedCount === 0) return;
       setLoading(true);
+      const data = getChangedFields()
       const result = await updateUserRequest(id, data);
       console.log(result);
       onSuccess();

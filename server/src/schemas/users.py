@@ -1,7 +1,10 @@
 from enum import StrEnum
+from uuid import UUID
 from pydantic import BaseModel, Field, EmailStr, HttpUrl, model_validator, field_validator
+from fastapi import UploadFile, File
 from .common import BaseOut
 from ..validators import validate_password_rules
+from .address import AddressIn
 
 class Roles(StrEnum):
     USER = "user"
@@ -20,6 +23,7 @@ class UserIn(UserBase):
     password: str = Field(min_length=8, max_length=50)
     confirm_password: str = Field(min_length=8, max_length=50)
     role: Roles = Field(default=Roles.USER)
+    #address: AddressIn
     recaptcha: str = Field(min_length=1)
     
     @field_validator("password")
@@ -53,7 +57,7 @@ class UserUpdate(BaseModel):
     last_name: str | None = Field(default=None, max_length=100)
     username: str | None = Field(default=None, max_length=20)
     email: EmailStr | None  = Field(default=None)
-    image_url: str | None = Field(default=None, max_length=255)
+    image_url: UploadFile | None = File(default=None)
     mfa_active: bool | None = Field(default=None)
 
     class Config:
@@ -68,7 +72,7 @@ class UserOut(UserBase, BaseOut):
     image_url: HttpUrl = Field(max_length=255)
     mfa_active: bool = Field(default=False)
     role: Roles
-    disabled: bool = Field(default=False)
+    enabled: bool = Field(default=True)
 
     class Config:
         json_schema_extra = {

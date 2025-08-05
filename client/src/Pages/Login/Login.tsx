@@ -1,16 +1,16 @@
 import { useRef } from "react";
 import { type SubmitHandler, useForm, useWatch  } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type LoginFormData, loginSchema } from "../../schemas/auth";
-import AppForm from "../../components/ui/Form/Form";
-import FormField from "../../components/ui/Input/Input";
-import ReCaptchaField from "../../components/Recaptcha/Recaptcha";
-import type { ReCaptchaFieldHandle } from "../../components/Recaptcha/Recaptcha";
-import Button from "../../components/ui/Button/Button";
-import styles from "../../styles/Form.module.css"
+import { type LoginFormData, loginSchema } from "@/schemas/auth";
+import AppForm from "@/components/ui/Form/Form";
+import FormField from "@/components/ui/Input/Input";
+import ReCaptchaField from "@/components/Recaptcha/Recaptcha";
+import type { ReCaptchaFieldHandle } from "@/components/Recaptcha/Recaptcha";
+import Button from "@/components/ui/Button/Button";
+import styles from "@/styles/Form.module.css"
 import login_styles from "./Login.module.css"
-import { useButtonEnablement } from "../../hooks/useButtonEnablement";
-import { useAuth } from "../../context/AuthProvider";
+import { useButtonEnablement } from "@/hooks/useButtonEnablement";
+import { useAuth } from "@/context/AuthProvider";
 
 function LoginPage() {
     const {login, loading} = useAuth();

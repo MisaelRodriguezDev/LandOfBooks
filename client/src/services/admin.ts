@@ -1,7 +1,7 @@
 import api from  "./axios"
-import type { CreateUserResponse, UpdateUserFromAdminResponse } from "../types/admin"
-import type { CreateUserFromAdminFormData } from "../schemas/admin"
-import type { UpdateUserFormData } from "../schemas/user"
+import type { CreateUserResponse, UpdateUserFromAdminResponse } from "@/types/admin"
+import type { CreateUserFromAdminFormData } from "@/schemas/admin"
+import type { UpdateUserFormData } from "@/schemas/user"
 import type { UUID } from "crypto"
 
 export const createUserRequest = async(data: CreateUserFromAdminFormData): Promise<CreateUserResponse> => await api.post('admin/users', data);

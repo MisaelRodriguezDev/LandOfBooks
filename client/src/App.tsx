@@ -16,7 +16,17 @@ export default function App() {
   const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
 
-  const columns = useDynamicColumns<UserProfile>(users, {exclude: ['image_url', 'mfa_active']})
+  const columns = useDynamicColumns<UserProfile>(users, 
+    {
+      exclude: ['image_url', 'mfa_active'], 
+      labels: {
+        first_name: "Nombres", 
+        last_name: "Apellidos", 
+        email: "Correo", 
+        enabled: "Status"
+      }
+    }
+  )
 
   const fetchData = async () => {
     try {
@@ -77,7 +87,7 @@ export default function App() {
     />
   </Modal>
 )}
-      <div>
+      { users.length > 0 && <div>
         <Button
           content="Crear usuario"
           content_loading="Crear usuario"
@@ -86,9 +96,9 @@ export default function App() {
           action='create'
           fn={() => setShowRegisterModal(true)}
         />
-      </div>
+      </div>}
       <div className={styles.table_wrapper}>
-        {users ? <div className={styles.table_container}>
+        {users.length > 0 ? <div className={styles.table_container}>
         <h1>Lista de usuarios</h1>
         <Table 
           columns={columns} 
@@ -99,6 +109,7 @@ export default function App() {
             setShowUpdateModal(true);
           }}
           deletefn={onDeleteUser}
+          hideTimestamps={true}
         />
       </div> : <p>No data</p> }
 

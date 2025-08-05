@@ -1,5 +1,5 @@
 import type { FormEventHandler, ReactNode } from "react"
-import type { ModuleCss } from "../../../types/component";
+import type { ModuleCss } from "@/types/component";
 import styles from "./Form.module.css"
 
 interface Props extends ModuleCss {

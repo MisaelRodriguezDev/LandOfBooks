@@ -18,3 +18,23 @@
     grid-column: span 2;
     width: 95%;
 }
+
+.checkPrivacyPolicy {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.pPrivacyPolicy {
+    border: none;
+    color: var(--link);
+    background-color: var(--light-bg);
+    cursor: pointer;
+}
+
+.pPrivacyPolicy:hover {
+  text-decoration: underline;
+  color: var(--link-hover);
+}
