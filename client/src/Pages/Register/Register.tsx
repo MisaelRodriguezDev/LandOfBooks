@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { type SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type RegisterFormData, registerSchema } from "@/schemas/auth";
@@ -169,9 +170,9 @@ function RegisterPage() {
         <div>
           <p className={styles.text}>
             ¿Ya tienes una cuenta?{" "}
-            <a className={styles.link} href="/login">
+            <Link className={styles.link} to="/login">
               Inicia sesión aquí
-            </a>
+            </Link>
           </p>
         </div>
       </div>

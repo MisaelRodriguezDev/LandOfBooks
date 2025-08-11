@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { type SubmitHandler, useForm, useWatch  } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type LoginFormData, loginSchema } from "@/schemas/auth";
@@ -99,7 +100,7 @@ function LoginPage() {
                     <p>o</p>
                 </div>
                 <div>
-                    <p className={styles.text}>¿No tienes una cuenta? <a className={styles.link} href="/register">Regístrate aquí</a></p>
+                    <p className={styles.text}>¿No tienes una cuenta? <Link className={styles.link} to="/register">Regístrate aquí</Link></p>
                 </div>
             </div>
             </div>
