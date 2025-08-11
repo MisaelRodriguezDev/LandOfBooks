@@ -18,6 +18,7 @@ import PublishersManagment from '@/Pages/Administration/Librarian/Publishers/Pub
 import AuthorsManagment from '@/Pages/Administration/Librarian/Authors/Authors';
 import BooksManagement from '@/Pages/Administration/Librarian/Books/Books';
 import BookCopiesManagement from '@/Pages/Administration/Librarian/Copies/Copies';
+import BooksPage from '@/Pages/Books/BooksPage';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
         element: <Layout />,
         children: [
           { index: true, element: <HomePage /> },
+          { path: 'books', element: <BooksPage /> },
           { path: 'search', element: <SearchPage /> },
           { path: 'books/:id', element: <BookDetailPage /> },
           { path: 'loading', element: <LoadingScreen /> },

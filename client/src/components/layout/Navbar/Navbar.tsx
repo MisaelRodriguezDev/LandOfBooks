@@ -82,8 +82,8 @@ export default function Navbar() {
               </li>
               <li>
                 <Link
-                  to="/catalog"
-                  className={isActive("/catalog") ? styles.active : ""}
+                  to="/books"
+                  className={isActive("/books") ? styles.active : ""}
                 >
                   <FiBookOpen className={styles.navIcon} />
                   <span>Catálogo</span>
@@ -243,8 +243,8 @@ export default function Navbar() {
             </li>
             <li>
               <Link
-                to="/catalog"
-                className={isActive("/catalog") ? styles.active : ""}
+                to="/books"
+                className={isActive("/books") ? styles.active : ""}
                 onClick={closeMenu}
               >
                 <FiBookOpen className={styles.navIcon} />
