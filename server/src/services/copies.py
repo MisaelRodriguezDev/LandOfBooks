@@ -102,3 +102,11 @@ class BookCopyService:
             logger.error(f"Error al eliminar la copia del libro {id}", exc_info=True)
             raise ServerError()
         
+    def delete_book_copy_by_book(self, book_id: UUID):
+        try:
+            result = self.repository.delete_by_book(book_id)
+            return result
+        except SQLAlchemyError:
+            logger.error(f"Error al eliminar la copia del libro {book_id}", exc_info=True)
+            raise ServerError()
+        

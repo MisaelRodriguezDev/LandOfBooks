@@ -1,5 +1,6 @@
 from uuid import UUID
 from sqlmodel import Session
+from src.services.copies import BookCopyService
 from src.models.book_author import BookAuthor
 from src.models.book_genre import BookGenre
 from src.schemas.books import BookIn, BookUpdate, BookOut
@@ -18,6 +19,7 @@ class BookService:
         self.repository = BookRepository(session)
         self.genre_service = GenreService(session)
         self.author_service = AuthorService(session)
+        self.copies_service = BookCopyService(session)
 
     def get_book_by_id(self, id: UUID):
         try:
@@ -109,7 +111,7 @@ class BookService:
                 if not book:
                     raise NotFound()
                 self.repository.delete(book)
-            
+                self.copies_service.delete_book_copy_by_book(id)
             self.session.commit()
             return "Libro eliminado correctamente"
         except SQLAlchemyError as e:

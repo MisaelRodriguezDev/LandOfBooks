@@ -1,5 +1,5 @@
 from uuid import UUID
-from sqlmodel import Session, select
+from sqlmodel import Session, select, update
 from src.models import BookCopy
 from src.schemas.books import BookCopyStatus as Status
 
@@ -47,6 +47,16 @@ class BookCopyRepository:
         book_copy.status = Status.REMOVED
         book_copy.enabled = False
         return self._save_and_refresh(book_copy)
+    
+    def delete_by_book(self, book_id: UUID):
+        stmt = (
+            update(BookCopy)
+            .where(BookCopy.book_id == book_id)
+            .values(enabled = False, status = Status.REMOVED)
+        )
+        
+        self.session.exec(stmt)
+        return "Copias deshabilitadas"
     
     def mark_book_as_lost(self, book_copy: BookCopy):
         book_copy.status = Status.LOST
