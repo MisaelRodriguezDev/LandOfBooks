@@ -72,7 +72,7 @@ export default function CreateBookCopy({onSuccess, books}: Readonly<CreateBookCo
                     <FormField<CreateBookCopyFormData>
                         label="Código de barras"
                         id="barcode"
-                        type="number"
+                        type="text"
                         register={register}
                         error={errors.barcode}
                     />

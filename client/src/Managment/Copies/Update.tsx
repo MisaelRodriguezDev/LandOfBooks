@@ -79,7 +79,7 @@ export default function UpdateBookCopy({
           <FormField<UpdateBookCopyFormData>
             label="Código de barras"
             id="barcode"
-            type="number"
+            type="text"
             register={register}
             error={errors.barcode}
           />

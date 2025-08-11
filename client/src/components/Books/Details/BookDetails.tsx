@@ -39,14 +39,14 @@ interface BookDetailProps {
   onReserve: (bookId: string) => void;
 }
 
-const BookDetail: React.FC<BookDetailProps> = ({ book, onRequestLoan, onReserve }) => {
+const BookDetail: React.FC<BookDetailProps> = ({ book, onRequestLoan }) => {
   const getAuthorName = (author: Author): string => {
     const fullName = [author.first_name, author.last_name].filter(Boolean).join(' ');
     return author.pseudonym ? `${fullName} (${author.pseudonym})` : fullName;
   };
 
   //const canReserve = book.available_copies === 0;
-  const canReserve = false
+  //const canReserve = false
   return (
     <div className={styles.detailContainer}>
       <div className={styles.header}>

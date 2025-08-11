@@ -1,3 +1,3 @@
 import api from "./axios"
 
-export const createLoanRequest = async (data) => api.post("/loans", data)
+export const createLoanRequest = async (data: unknown) => api.post("/loans", data)
