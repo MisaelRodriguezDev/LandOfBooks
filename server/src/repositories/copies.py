@@ -20,6 +20,10 @@ class BookCopyRepository:
     def get_all(self):
         stmt = select(BookCopy).where(BookCopy.enabled)
         return self.session.exec(stmt).all()
+
+    def get_all_from_admin(self):
+        stmt = select(BookCopy)
+        return self.session.exec(stmt).all()
     
     def get_all_available(self):
         stmt = select(BookCopy).where(BookCopy.status ==  Status.AVAILABLE,BookCopy.enabled)

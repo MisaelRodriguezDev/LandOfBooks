@@ -1,0 +1,51 @@
+.overlay {
+  position: absolute; /* Cambiado de fixed a absolute */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(42, 33, 24, 0.95); /* --black con opacidad */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  min-height: 100px; /* Altura mínima para mantener legibilidad */
+}
+
+.spinnerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  max-width: 90%; /* Asegura que no toque bordes en pantallas pequeñas */
+}
+
+.spinner {
+  width: min(60px, 15vw); /* Tamaño responsive */
+  height: min(60px, 15vw);
+  border: 4px solid var(--gray-light); /* borde neutro */
+  border-top: 4px solid var(--primary); /* color principal de la paleta */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  box-shadow: 0 0 15px rgba(215, 145, 16, 0.3); /* sombra con color primary en rgba */
+}
+
+.loadingText {
+  color: var(--gray-dark);
+  margin-top: 1.5rem;
+  font-size: clamp(0.9rem, 3vw, 1.2rem); /* Tamaño de texto responsive */
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

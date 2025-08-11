@@ -28,5 +28,5 @@ class ReservationUpdate(ReservationBase):
     book_id: UUID | None = Field(default=None)
 
 class ReservationOut(BaseOut, ReservationIn):
-    book: "BookOut"
-    user: "UserOut"
+    class Config:
+        pass

@@ -90,7 +90,9 @@
   padding: 0;
 }
 
-.nav a {
+/* Estilos comunes para links y botones en el nav */
+.nav a,
+.navLink {
   color: var(--white);
   text-decoration: none;
   font-weight: 500;
@@ -102,7 +104,16 @@
   gap: 0.5rem;
 }
 
-.nav a:hover {
+/* Botón estilo link para cerrar sesión */
+.navLink {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit; /* hereda fuente */
+}
+
+.nav a:hover,
+.navLink:hover {
   background-color: rgba(255, 255, 255, 0.1);
   color: var(--primary);
 }
@@ -121,6 +132,11 @@
 .navIcon {
   color: var(--primary);
   transition: color 0.3s;
+}
+
+/* Clase extra para botón logout si quieres agregar estilos */
+.logoutButton {
+  /* Puedes agregar estilos adicionales aquí si quieres */
 }
 
 .highlight {
@@ -237,9 +253,36 @@
   color: var(--white);
 }
 
+/* También puedes añadir para botón logout móvil */
+.mobileNav button.navLink {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.mobileNav button.navLink:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--primary);
+}
+
+.libraryMenuDesktop {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Responsive */
 @media (max-width: 992px) {
-  .desktopNav {
+  .desktopNav, .libraryMenuDesktop {
     display: none;
   }
   

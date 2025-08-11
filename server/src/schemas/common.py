@@ -6,5 +6,6 @@ class BaseOut(BaseModel):
     id: UUID
     created_at: datetime
     updated_at: datetime
+    enabled: bool
 
     model_config = ConfigDict(from_attributes=True)

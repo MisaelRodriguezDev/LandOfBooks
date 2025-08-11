@@ -31,6 +31,17 @@ class AuthorService:
         except SQLAlchemyError:
             logger.error("Error al obtener los autores", exc_info=True)
             raise ServerError()
+        
+    def get_all_authors_from_admin(self):
+        try:
+            result = self.repository.get_all_from_admin()
+            if not result:
+                raise NotFound()
+            
+            return [AuthorOut.model_validate(res) for res in result]
+        except SQLAlchemyError:
+            logger.error("Error al obtener los autores", exc_info=True)
+            raise ServerError()
 
     def create_author(self, data: AuthorIn):
         try:

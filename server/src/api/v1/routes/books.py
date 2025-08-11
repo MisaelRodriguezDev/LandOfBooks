@@ -30,6 +30,14 @@ def get_books(service: BookService = Depends(get_service(BookService))):
     books = service.get_all_books()
     return ApiResponse(data=books)
 
+@router.get('/admin', response_model=ApiResponse[list[BookOut]], responses=GET_RESPONSES)
+def get_books(
+    service: BookService = Depends(get_service(BookService)),
+    _ = Depends(is_librarian_or_admin)    
+):
+    books = service.get_all_books()
+    return ApiResponse(data=books)
+
 # Rutas que modifican relaciones (deben ir antes que /{id} porque tienen más segmentos)
 @router.patch('/{id}/add-genre/{genre_id}', response_model=ApiResponse, responses=PUT_RESPONSES)
 def add_genre_to_book(id: UUID, genre_id: UUID, service: BookService = Depends(get_service(BookService)), _ = Depends(is_librarian_or_admin)):
@@ -57,7 +65,7 @@ def get_book_by_id(id: UUID, service: BookService = Depends(get_service(BookServ
     book = service.get_book_by_id(id)
     return ApiResponse(data=book)
 
-@router.post('/', response_model=ApiResponse[str], responses=POST_RESPONSES)
+@router.post('', response_model=ApiResponse[str], responses=POST_RESPONSES)
 def create_book(data: BookIn, service: BookService = Depends(get_service(BookService)), _ = Depends(is_librarian_or_admin)):
     response = service.create_book(data)
     return ApiResponse(data=response)

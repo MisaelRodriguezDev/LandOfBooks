@@ -30,7 +30,7 @@ class User(Base, table=True):
     last_name: str = Field(nullable=False, min_length=5, max_length=100)
     username: str = Field(min_length=5, max_length=20, index=True, unique=True)
     email: bytes = Field(nullable=False, index=True, unique=True, sa_type=BYTEA)
-    phone: str = Field(nullable=False, min_length=13,  max_length=13)
+    phone: str = Field(nullable=True, min_length=10,  max_length=13)
     password: str = Field(nullable=False, min_length=8, max_length=255)
     role: Roles = Field(
         min_length=4, 

@@ -13,6 +13,11 @@ def get_all_book_copies(service: BookCopyService = Depends(get_service(BookCopyS
     copies = service.get_all_book_copies()
     return ApiResponse(data=copies)
 
+@router.get('/admin')
+def get_all_book_copies(service: BookCopyService = Depends(get_service(BookCopyService))):
+    copies = service.get_all_book_copies_from_admin()
+    return ApiResponse(data=copies)
+
 @router.get('/{id}')
 def get_book_copy_by_id(id: UUID, service: BookCopyService = Depends(get_service(BookCopyService)), _ = Depends(is_librarian_or_admin)):
     copy = service.get_book_copy_by_id(id)
@@ -23,7 +28,12 @@ def get_all_book_copies_available(service: BookCopyService = Depends(get_service
     copies = service.get_all_book_copies_available()
     return ApiResponse(data=copies)
 
-@router.post('')
+@router.get('/{book_id}/available')
+def get_all_book_copies_available(book_id: UUID, service: BookCopyService = Depends(get_service(BookCopyService))):
+    copies = service.get_all_book_copies_available_by_book(book_id)
+    return ApiResponse(data=copies)
+
+@router.post('', responses=POST_RESPONSES)
 def create_book_copy(data: BookCopyIn, service: BookCopyService = Depends(get_service(BookCopyService)), _ = Depends(is_librarian_or_admin)):
     response = service.create_book_copy(data)
     return ApiResponse(data=response)

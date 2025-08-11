@@ -39,7 +39,7 @@ def get_user_loans(
     loans = service.get_loans_by_user(user_id)
     return ApiResponse(data=loans)
 
-@router.post('')
+@router.post('', status_code=201)
 def create_loan(
     data: LoanIn,
     id: UUID | None = Query(default=None), 
@@ -50,5 +50,37 @@ def create_loan(
 
     if id and user_id != security.user.id and not (security.is_admin or security.is_librarian):
         raise ForbiddenError("No tienes permisos para agregar préstamos a este usuario")
-    result = service.create_loan(data)
+    result = service.create_loan(data, user_id)
+    return ApiResponse(status=201, data=result)
+
+@router.patch('/{id}')
+def update_loan(
+    data: LoanUpdate,
+    service: LoanService = Depends(get_service(LoanService)), 
+    _ = Depends(is_librarian_or_admin)
+):
+    result = service.update_loan(id, data)
+    return ApiResponse(data=result)
+
+@router.delete('/{id}')
+def delete_loan(
+    id: UUID,
+    service: LoanService = Depends(get_service(LoanService)), 
+    _ = Depends(is_librarian_or_admin)
+):
+    result = service.delete_loan(id)
+    return ApiResponse(data=result)
+
+@router.post('/cancel/{id}')
+def cancel_loan(
+    id: UUID,
+    user_id: UUID | None = Query(default=None),
+    service: LoanService = Depends(get_service(LoanService)), 
+    security: SecurityContext = Depends(get_security_context)
+):
+    _user_id = user_id or security.user.id
+
+    if user_id and _user_id != security.user.id and not (security.is_admin or security.is_librarian):
+        raise ForbiddenError("No tienes permisos para cancelar préstamos a este usuario")
+    result = service.cancel_loan(id)
     return ApiResponse(data=result)

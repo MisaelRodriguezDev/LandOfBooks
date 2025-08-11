@@ -14,6 +14,10 @@ class PublisherRepository:
         stmt = select(Publisher).where(Publisher.enabled)
         return self.session.exec(stmt).all()
     
+    def get_all_from_admin(self):
+        stmt = select(Publisher)
+        return self.session.exec(stmt).all()
+    
     def create(self, publisher: Publisher):
         self.session.add(publisher)
         self.session.commit(publisher)

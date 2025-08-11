@@ -11,9 +11,10 @@ import styles from "@/styles/Form.module.css"
 import login_styles from "./Login.module.css"
 import { useButtonEnablement } from "@/hooks/useButtonEnablement";
 import { useAuth } from "@/context/AuthProvider";
+import ErrorNotification from "@/components/ui/Notifications/Error";
 
 function LoginPage() {
-    const {login, loading} = useAuth();
+    const {login, loading, error} = useAuth();
     const {
         register,
         handleSubmit,
@@ -45,15 +46,15 @@ function LoginPage() {
                 return;
             }
             login(data)
-            console.log(data)    
             recaptchaRef.current?.reset();
-        } catch {
-            console.log("first")
+        } catch (error) {
+            console.log(error)
         } 
     }
 
     return (
             <div className={styles.container}>
+            { error && <ErrorNotification message={error} />}
             <div className={styles.form_container}>
                 <h2>Iniciar Sesión</h2>
                 <AppForm parentMethod={handleSubmit(onSubmit)}>

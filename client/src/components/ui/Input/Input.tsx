@@ -27,7 +27,7 @@ function FormField<T extends Record<string, unknown>>({
         <input
           id={id}
           type={inputType}
-          {...register(id)}
+          {...register(id, inputType === "number" ? {valueAsNumber: true} : undefined)}
           className={`${styles.form_control} ${error ? styles.error : ""} ${className ?? ""}`}
         />
         {isPasswordType && (

@@ -16,3 +16,6 @@ def barcode_generator(prefix: str = "978", length: int = 13) -> str:
 
     body = ''.join(str(random.randint(0, 9)) for _ in range(length - len(prefix)))
     return prefix + body
+
+if __name__ == "__main__":
+    print(barcode_generator())

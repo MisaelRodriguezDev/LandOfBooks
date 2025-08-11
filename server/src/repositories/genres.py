@@ -10,6 +10,14 @@ class GenreRepository:
         stmt = select(Genre).where(Genre.id == id, Genre.enabled)
         return self.session.exec(stmt).first()
     
+    def get_all(self):
+        stmt = select(Genre).where(Genre.enabled)
+        return self.session.exec(stmt).all()
+    
+    def get_all_from_admin(self):
+        stmt = select(Genre)
+        return self.session.exec(stmt).all()
+    
     def get_by_name(self, name: str):
         stmt = select(Genre).where(Genre.name == name, Genre.enabled)
         return self.session.exec(stmt).first()

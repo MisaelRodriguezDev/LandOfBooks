@@ -32,4 +32,6 @@ interface Options {
 
 export interface SelectProps<T extends FieldValues> extends Omit<FormFieldProps<T>, "type"> {
   options: Options[];
+  multiple?: boolean;
+  defaultValue?: string | string[];
 }

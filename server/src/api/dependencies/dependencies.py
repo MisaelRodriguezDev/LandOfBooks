@@ -47,7 +47,7 @@ def authenticate_user(session: Session, username: str, password: str):
         User: Si las credenciales son correctas devuelve la cuenta en caso contrario devuelve false
     """    
     account = get_account_by_username(session, username)
-    if not account:
+    if not account or not account.is_confirmed:
         return False
     if not verify_password(password, account.password):
         return False

@@ -32,6 +32,17 @@ class BookCopyService:
             logger.error("Error al obtener las copia de librociones", exc_info=True)
             raise ServerError()
         
+    def get_all_book_copies_from_admin(self):
+        try:
+            result = self.repository.get_all_from_admin()
+            if not result:
+                raise NotFound()
+            
+            return [BookCopyOut.model_validate(res) for res in result]
+        except SQLAlchemyError:
+            logger.error("Error al obtener las copia de librociones", exc_info=True)
+            raise ServerError()
+        
     def get_all_book_copies_available(self):
         try:
             result = self.repository.get_all_available()

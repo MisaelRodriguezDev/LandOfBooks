@@ -31,6 +31,17 @@ class GenreService:
         except SQLAlchemyError:
             logger.error("Error al obtener los géneros", exc_info=True)
             raise ServerError()
+    
+    def get_all_genres_from_admin(self):
+        try:
+            result = self.repository.get_all_from_admin()
+            if not result:
+                raise NotFound()
+            
+            return [GenreOut.model_validate(res) for res in result]
+        except SQLAlchemyError:
+            logger.error("Error al obtener los géneros", exc_info=True)
+            raise ServerError()
 
     def create_genre(self, data: GenreIn):
         try:

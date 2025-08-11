@@ -1,6 +1,6 @@
 from uuid import UUID
 from sqlmodel import Session
-from src.schemas.publisher import PublisherIn, PublisherUpdate, PublisherOut
+from src.schemas.publishers import PublisherIn, PublisherUpdate, PublisherOut
 from src.models import Publisher
 from src.repositories.publishers import PublisherRepository
 from src.exceptions.exceptions import ConflictError, ServerError, NotFound, BadRequest
@@ -24,6 +24,17 @@ class PublisherService:
     def get_all_publishers(self):
         try:
             result = self.repository.get_all()
+            if not result:
+                raise NotFound()
+            
+            return [PublisherOut.model_validate(res) for res in result]
+        except SQLAlchemyError:
+            logger.error("Error al obtener los editoriales", exc_info=True)
+            raise ServerError()
+        
+    def get_all_publishers_from_admin(self):
+        try:
+            result = self.repository.get_all_from_admin()
             if not result:
                 raise NotFound()
             

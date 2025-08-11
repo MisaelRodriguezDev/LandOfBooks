@@ -14,6 +14,10 @@ class AuthorRepository:
         stmt = select(Author).where(Author.enabled)
         return self.session.exec(stmt)
     
+    def get_all_from_admin(self):
+        stmt = select(Author)
+        return self.session.exec(stmt)
+
     def create(self, author: Author):
         self.session.add(author)
         self.session.commit()

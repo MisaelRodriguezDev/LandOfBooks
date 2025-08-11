@@ -36,7 +36,7 @@ class AuthorUpdate(AuthorBase):
             }
         }
 
-class AuthorOut(BaseOut, AuthorIn):
+class AuthorOut(AuthorIn, BaseOut):
 
     class Config:
         json_schema_extra = {

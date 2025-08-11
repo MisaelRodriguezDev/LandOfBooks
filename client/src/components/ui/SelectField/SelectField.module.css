@@ -22,3 +22,28 @@
 .active {
     visibility: visible;
 }
+
+.multipleSelect {
+  height: auto;
+  min-height: 120px;
+  padding: 8px;
+}
+
+.multipleSelect option {
+  padding: 8px 12px;
+  margin: 4px 0;
+  border-radius: 4px;
+  background-color: var(--light-bg);
+  transition: background-color 0.2s;
+}
+
+.multipleSelect option:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+.multipleSelect option:checked {
+  background-color: var(--primary);
+  color: white;
+  font-weight: bold;
+}

@@ -27,14 +27,14 @@ class LoanIn(LoanBase):
     book_id: UUID
     status: LoanStatus = Field(default=LoanStatus.PENDING, min_length=6, max_length=8)
 
-class LoanUpdate(BaseModel):
+class LoanUpdate(LoanBase):
     copy_id: UUID | None = Field(default=None)
     status: LoanStatus | None = Field(default=None, min_length=6, max_length=8)
 
-class LoanOut(BaseOut, LoanIn):
-    book_copy: BookCopyOut
-    user: "UserOut"
-    penalty: PenaltyOut
+class LoanOut(BaseOut, LoanBase):
+    status: LoanStatus
+    book_title: str
+    user: str
 
     class Config:
         json_schema_extra = {

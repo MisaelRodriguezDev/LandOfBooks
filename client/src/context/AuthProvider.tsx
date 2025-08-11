@@ -43,7 +43,7 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
     navigate('/');
   }, [navigate]);
 
-  useInactivityLogout(logout, !!user)
+  //useInactivityLogout(logout, !!user)
 
   const checkAuth = useCallback(async () => {
     const token = localStorage.getItem('token');

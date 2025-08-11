@@ -7,13 +7,13 @@ from uuid import UUID
 from pydantic import BaseModel, Field
 from .common import BaseOut
 from .authors import AuthorOut
-from .publisher import PublisherOut
+from .publishers import PublisherOut
 
 class BookCopyStatus(StrEnum):
-    AVAILABLE = 'available'
-    LOANED = 'loaned'
-    LOST = 'lost'
-    REMOVED = 'removed'
+    AVAILABLE = 'AVAILABLE'
+    LOANED = 'LOANED'
+    LOST = 'LOST'
+    REMOVED = 'REMOVED'
 
 class BookBase(BaseModel):
     isbn: str = Field(min_length=10, max_length=13)
@@ -23,8 +23,8 @@ class BookBase(BaseModel):
     year_of_publication: int = Field(ge=0, le=2100)
 
 class BookIn(BookBase):
-    genre_ids: list[UUID]
-    author_ids: list[UUID]
+    genre_ids: list[UUID] = Field(default_factory=list)
+    author_ids: list[UUID] = Field(default_factory=list)
     publisher_id: UUID
 
     class Config:
@@ -41,6 +41,9 @@ class BookUpdate(BaseModel):
     cover: str | None = Field(default=None, min_length=50, max_length=255)
     year_of_publication: int | None = Field(default=None, ge=0, le=2100)
     publisher_id: UUID | None = Field(default=None)
+    
+    genre_ids: list[UUID] | None = Field(default=None)
+    author_ids: list[UUID] | None = Field(default=None)
 
     class Config:
         json_schema_extra = {
@@ -63,13 +66,15 @@ class BookOut(BaseOut, BookBase):
 
 class BookCopyIn(BaseModel):
     book_id: UUID
-    barcode: str = Field(max_length=50)
+    barcode: str | None = Field(default=None, max_length=50)
     status: BookCopyStatus = Field(default=BookCopyStatus.AVAILABLE, min_length=4, max_length=9)
 
     class Config:
         json_schema_extra = {
             'example': {
-
+                "book_id": "e2c5a4a1-1dce-4b0a-8bce-9173fc1470c1",
+                "barcode": "",
+                "status": None
             }
         }
 
@@ -84,9 +89,7 @@ class BookCopyUpdate(BaseModel):
             }
         }
 
-class BookCopyOut(BaseOut, BookCopyIn):
-    book: BookOut
-
+class BookCopyOut(BookCopyIn, BaseOut):
     class Config:
         json_schema_extra = {
             'example': {
@@ -102,7 +105,7 @@ class GenreUpdate(BaseModel):
     name: str | None = Field(default=None, min_length=3, max_length=15)
     description: str | None = Field(default=None)
 
-class GenreOut(BaseOut, GenreIn):
+class GenreOut(GenreIn, BaseOut):
 
     class Config:
         json_schema_extra = {

@@ -88,14 +88,14 @@ const BookDetail: React.FC<BookDetailProps> = ({ book, onRequestLoan, onReserve 
           Pedir préstamo
         </button>
 
-        <button
+        {/*<button
           className={styles.reserveBtn}
           onClick={() => onReserve(book.id)}
           disabled={!canReserve}
           title={!canReserve ? 'El libro aún tiene copias disponibles' : 'Reservar este libro'}
         >
           Reservar
-        </button>
+        </button>*/}
       </div>
     </div>
   );

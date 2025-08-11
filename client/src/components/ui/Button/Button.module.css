@@ -36,12 +36,11 @@ button:disabled {
 }
 
 .update {
-    background: var(--quantum-gray);
-    color: var(--neon-cyan);
-    border: 1px solid var(--neon-cyan);
+    background: linear-gradient(135deg, #803394, #b24bcc);
+    color: var(--white);
 }
 
 .delete {
-    background: var(--error-red);
-    color: var(--pure-white);
+    background: var(--accent);
+    color: var(--white);
 }
