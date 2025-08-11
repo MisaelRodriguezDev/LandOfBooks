@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import BookCard from '../Card/BookCard';
 import styles from './BookContainer.module.css';
 
@@ -44,7 +44,9 @@ interface BookContainerProps {
 }
 
 const BookContainer: React.FC<BookContainerProps> = ({ books, loading, error, onRetry }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const location = useLocation();
+
   if (loading) {
     return (
       <div className={styles.loadingContainer}>
@@ -68,11 +70,16 @@ const BookContainer: React.FC<BookContainerProps> = ({ books, loading, error, on
     );
   }
 
+  const basePath = location.pathname.startsWith('/books') ? '/books' : '/books';
+
   return (
     <div className={styles.container}>
       {books.map(book => (
         <div key={book.id} className={styles.bookCardWrapper}>
-          <BookCard book={book} onViewDetails={() => navigate(`books/${book.id}`, {state: book})}/>
+          <BookCard 
+            book={book} 
+            onViewDetails={() => navigate(`${basePath}/${book.id}`, { state: book })}
+          />
         </div>
       ))}
     </div>
