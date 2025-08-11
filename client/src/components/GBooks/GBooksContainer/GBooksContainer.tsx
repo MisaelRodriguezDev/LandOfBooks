@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getGBooksRequest } from '@/services/gbooks';
 import GBookCard from '../GBookCard/GBookCard';
 import type { GBooksResponse } from '@/types/gbooks';
-import styles from './GbooksContainer.module.css';
+import styles from './GBooksContainer.module.css';
 
 const GbooksContainer = ({ q }: { q: string }) => {
   const [booksData, setBooksData] = useState<GBooksResponse | null>(null);
