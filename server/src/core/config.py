@@ -5,8 +5,8 @@ class Config:
 
     PORT: int = config("PORT", cast=int)
     ENVIRONMENT: str = config("ENVIRONMENT", default='production')
-    _CERT_FILE: str = config("CERT")
-    _CERT_KEY: str = config("CERT_KEY")
+    _CERT_FILE: str | None = config("CERT", default=None)
+    _CERT_KEY: str | None = config("CERT_KEY", default=None)
     SECRET_KEY: str = config("SECRET_KEY")
     DB_URL: str = config("DB_URL_DEV")
     CLIENT_URL: str = config("CLIENT_URL")
